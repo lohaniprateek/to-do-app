@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo app-list</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <%- include('partials/Header.ejs') %>
+    <div class="container">
+      <div>
+        <% contentArray.forEach(function(content) { %>
+        <div class="card">
+          <div class="card-head">
+            <img
+            src="/images/edit.png"
+            alt="Update"
+            style="width: 30px; height: 30px; cursor: pointer"
+            onclick="editItem()"
+          />
+          <h2 class="caveat"><%= content.title %></h2>
+          <img
+          src="/images/trash-bin_10164743.png"
+          alt="Delete"
+          style="width: 30px; height: 30px; cursor: pointer"
+          onclick="deleteItem()"
+        />
+        </div>
+          <p class="roboto-slab"><%= content.body %></p>
+        </div>
+        <% }); %>
+
+        <form action="/add" method="POST" style="display: inline;">
+          <div>
+          <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+            <img src="/images/Add.png"  alt="Delete" style="width: 30px; height: 20px; margin: 0; margin-left: 5px;" />
+          </button>
+          <input type="text" class="title-input" name="title" placeholder="Give a title to your TO-DO" value="Title"/>
+        </div>
+          <input type="text" class="body-input" name=" body" placeholder="Write here in brief" value="example text ...." />
+        </form>
+        
+      </div>
+    </div>
+
+    <%- include('partials/Footer.ejs') %>
+
+
+
+
+<script>
+  function deleteItem() {
+    fetch('/delete', {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          // Redirect after successful deletion
+          window.location.href = '/';
+        } else {
+          alert('Failed to delete item.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+  function editItem() {
+    fetch('/update', {
+      method: 'PUT'
+    })
+      .then(response => {
+        if (response.ok) {
+          // Redirect after successful deletion
+          window.location.href = '/';
+        } else {
+          alert('Failed to Update item.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
+  </body>
+</html>
