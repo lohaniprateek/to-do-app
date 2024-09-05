@@ -13,40 +13,45 @@
     <%- include('partials/Header.ejs') %>
     <div class="container">
       <div>
-        <% contentArray.forEach(function(content) { %>
+        <% tasksArray.forEach(function(task) { %> <!-- Correct the parameter name from 'tasks' to 'task' -->
         <div class="card">
           <div class="card-head">
+            <!-- Update button to call the edit function (implement 'editItem()' in your script) -->
             <img
-            src="/images/edit.png"
-            alt="Update"
-            style="width: 30px; height: 30px; cursor: pointer"
-            onclick="editItem()"
-          />
-          <h2 class="caveat"><%= content.title %></h2>
-          <img
-          src="/images/trash-bin_10164743.png"
-          alt="Delete"
-          style="width: 30px; height: 30px; cursor: pointer"
-          onclick="deleteItem()"
-        />
-        </div>
-          <p class="roboto-slab"><%= content.body %></p>
+              src="/images/edit.png"
+              alt="Update"
+              style="width: 30px; height: 30px; cursor: pointer"
+              onclick="editItem('<%= task.title %>')" 
+            />
+            <h2 class="caveat"><%= task.title %></h2> 
+           
+            <img
+              src="/images/trash-bin_10164743.png"
+              alt="Delete"
+              style="width: 30px; height: 30px; cursor: pointer"
+              onclick="deleteItem('<%= task.title %>')" 
+            />
+          </div>
+          <p class="roboto-slab"><%= task.body %></p> 
         </div>
         <% }); %>
-
+    
+        <!-- Form to add a new task -->
         <form action="/add" method="POST" style="display: inline;">
           <div>
-          <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
-            <img src="/images/Add.png"  alt="Delete" style="width: 30px; height: 20px; margin: 0; margin-left: 5px;" />
-          </button>
-          <input type="text" class="title-input" name="title" placeholder="Give a title to your TO-DO" value="Title"/>
-        </div>
-          <input type="text" class="body-input" name=" body" placeholder="Write here in brief" value="example text ...." />
+            <!-- Button to submit form -->
+            <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+              <img src="/images/Add.png" alt="Add" style="width: 30px; height: 20px; margin: 0; margin-left: 5px;" />
+            </button>
+            <!-- Input for task title -->
+            <input type="text" class="title-input" name="title" placeholder="Give a title to your TO-DO" value="Title" />
+          </div>
+          <!-- Input for task body -->
+          <input type="text" class="body-input" name="body" placeholder="Write here in brief" value="example text ...." />
         </form>
-        
       </div>
     </div>
-
+    
     <%- include('partials/Footer.ejs') %>
 
 
