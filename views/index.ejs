@@ -18,13 +18,13 @@
           <div class="card-head">
             <!-- Update button to call the edit function (implement 'editItem()' in your script) -->
             <img
-              src="/images/edit.png"
-              alt="Update"
-              style="width: 30px; height: 30px; cursor: pointer"
-              onclick="editItem('<%= task.title %>')" 
-            />
-            <h2 class="caveat"><%= task.title %></h2> 
-           
+  src="/images/edit.png"
+  alt="Update"
+  style="width: 30px; height: 30px; cursor: pointer"
+  onclick="editItem('<%= task.id %>')" 
+/>
+
+            <h2 class="caveat"><%= task.title %></h2>
             <img
               src="/images/trash-bin_10164743.png"
               alt="Delete"
@@ -58,6 +58,11 @@
 
 
 <script>
+
+function editItem(id) {
+  window.location.href = `/edit/${id}`;
+}
+
   function deleteItem() {
     fetch('/delete', {
       method: 'DELETE'
@@ -68,20 +73,6 @@
           window.location.href = '/';
         } else {
           alert('Failed to delete item.');
-        }
-      })
-      .catch(error => console.error('Error:', error));
-  }
-  function editItem() {
-    fetch('/update', {
-      method: 'PUT'
-    })
-      .then(response => {
-        if (response.ok) {
-          // Redirect after successful deletion
-          window.location.href = '/';
-        } else {
-          alert('Failed to Update item.');
         }
       })
       .catch(error => console.error('Error:', error));

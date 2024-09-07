@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Task</title>
+  <!-- <link rel="stylesheet" href="/styles/style.css" /> -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  color: #080000;
+  font-size: 20px;
+}
+.navbar {
+  text-align: center;
+  display: block;
+  height: 60px;
+  width: 100%;
+  background: rgb(0, 174, 255);
+}
+.navbar h3 {
+  font-size: 50px;
+  top: 0;
+}
+.container {
+  height: 750px;
+  width: 70%;
+  margin: 3rem auto;
+  border-radius: 30px;
+  background: rgba(15, 13, 13, 0.658);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.card {
+  display: flex-line;
+  flex-direction: row;
+  background: #afaeae;
+  height: 500px;
+  width: 300px;
+  border-radius: 30px;
+  justify-content: center;
+  /* align-items: center; */
+}
+.card-head {
+  height: 30%;
+  width: 100%;
+  font-size: 30px;
+  background: darkblue;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.card-body{
+  display:grid;
+  gap: 20px;
+  height: 300px;
+  
+  
+  
+}
+
+
+
+#title{
+  border-radius: 30px;
+    background: #ddcbcb;
+    width: 100%;
+  margin-top: 20px;
+  margin: 10px 10px 0px 0px ;height: 50%;
+}
+#body{
+background: #ddcbcb;
+border-radius: 30px;
+margin: 20px 10px 0px 0px ;
+}
+button{
+width: 150px;
+border-radius: 30px;
+align-self: center;
+margin-left: 77px;
+}
+  </style>
+</head>
+<body>
+  <%- include('partials/Header.ejs') %>
+  
+  <div class="container">
+    <!-- Form to update the task -->
+    <div class="card">
+       <div class="card-head">
+      <!-- <h1>Edit</h1> -->
+       <label for="title" style ="color:  white; margin-left: 5px;">Title</label>
+      <input type="text" id="title"  class="title-input" name="title" value="<%= task.title %>" required>
+    </div>
+    <form action="/update/<%= task.id %>" method="POST">
+        <!-- Pre-fill the form with the current title -->
+        <div class=" card-body">
+        <!-- Pre-fill the form with the current body -->
+        <textarea id="body" name="body" class="body-input"  required><%= task.body %></textarea>
+        <!-- Submit button to save changes -->
+        <button type="submit">Update Task</button>
+      </div>
+    </form>
+
+  </div> 
+</div>
+  <%- include('partials/Footer.ejs') %>
+</body>
+</html>

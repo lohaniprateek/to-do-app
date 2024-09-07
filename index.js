@@ -26,7 +26,7 @@ async function listedTasks() {
     const result = await db.query("SELECT * FROM tasks;");
     let tasks = [];
     result.rows.forEach((task) => {
-      tasks.push(task); // Corrected from tasks.push(tasks)
+      tasks.push(task);
     });
     return tasks;
   } catch (err) {
@@ -63,6 +63,58 @@ app.post("/add", async (req, res) => {
   } catch (err) {
     console.error("Error adding new task:", err);
     res.status(500).send("Error adding task");
+  }
+});
+
+app.post("/update/:id", async (req, res) => {
+  const { id } = req.params; 
+  const { title, body } = req.body; //
+
+  if (!title || !body) {
+    return res.status(400).json({ error: "Title and body are required." });
+  }
+
+  try {
+    // Update the task in the database with the new title and body
+    await db.query("UPDATE tasks SET title = $1, body = $2 WHERE id = $3", [title, body, id]);
+    res.redirect("/"); // Redirect to the homepage after successful update
+  } catch (err) {
+    console.error("Error updating task:", err);
+    res.status(500).send("Error updating task");
+  }
+});
+
+
+
+// Route to  editjs 
+app.get("/edit/:id", async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    const result = await db.query("SELECT * FROM tasks WHERE id = $1", [id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).send("Task not found");
+    }
+
+    const task = result.rows[0]; 
+    
+    res.render("edit.ejs", { task });
+  } catch (err) {
+    console.error("Error fetching task for editing:", err);
+    res.status(500).send("Error fetching task");
+  }
+});
+
+app.post("/delete", async (req, res) => {
+  const { id } = req.params; 
+  try {
+    
+    await db.query("DELETE  FROM  tasks WHERE id = $3", [id]);
+    res.redirect("/"); 
+  } catch (err) {
+    console.error("Error updating task:", err);
+    res.status(500).send("Error Deleting task");
   }
 });
 
